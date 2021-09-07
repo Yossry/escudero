@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="view_stock_quants_tree_inherit" model="ir.ui.view">
+            <field name="name">view.stock.quants.tree.inherit</field>
+            <field name="model">stock.quants</field>
+            <field name="inherit_id" ref="stock_account.view_stock_quant_tree_editable_inherit"/>
+            <field name="arch" type="xml">
+                <field name="value" position="before">
+                    <field name="standard_price"/>
+
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

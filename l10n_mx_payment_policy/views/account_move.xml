@@ -1,0 +1,29 @@
+<odoo>
+  <data>
+    <!-- Modifica la vista del campo l10n_mx_edi_payment_policy-->
+    <record id="view_payment_policy_inherit" model="ir.ui.view">
+        <field name="name">view_payment_policy_inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_mx_edi.view_l10n_mx_edi_invoice_form_inherit"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='l10n_mx_edi_payment_policy']" position="replace">
+                <field name="l10n_mx_edi_payment_policy" attrs="{'invisible': [('l10n_mx_edi_cfdi_request', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_name_inherit" model="ir.ui.view">
+        <field name="name">view_name_inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="replace">
+              <!--Modifica la vista readonly name attrs="{'readonly': [('state', '!=', 'draft')]}" -->
+               <field name="name" readonly="True" placeholder="JRNL/2016/00001"/>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

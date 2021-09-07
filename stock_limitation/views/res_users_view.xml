@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_users_form_wh_stock_limitation" model="ir.ui.view">
+        <field name="name">res.users.form.wh_default.stock.limitation</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <field name="tz" position="after">
+                <field name='location_ids'
+                       readonly="0"
+                       options='{"no_create": True, "no_quick_create": True}'
+                       widget="many2many_tags"
+                       domain="[('usage', '=', 'internal')]"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

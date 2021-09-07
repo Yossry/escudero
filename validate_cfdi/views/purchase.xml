@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_approve_purchase" model="ir.ui.view">
+            <field name="name">view_approve_purchase</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <button name="button_approve" position="replace">
+                    <button name="button_approve" type="object" states="to approve" string="Aprobar Orden" class="oe_highlight" groups="validate_cfdi.group_purchase_approval"/>                      
+                </button>
+                <button name="button_confirm" position="replace">
+                    <button name="button_confirm" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" groups="validate_cfdi.group_purchase_approval"/>                  
+                </button>
+                <button name="button_confirm" position="replace">
+                    <button name="button_confirm" type="object" states="draft" string="Confirm Order" id="draft_confirm" groups="validate_cfdi.group_purchase_approval"/>                   
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>

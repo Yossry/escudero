@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record id="view_sale_book_day_excel" model="ir.ui.view">
+			<field name="name">view.sale.book.day.excel </field>
+			<field name="model">sale.day.book.report.excel</field>
+			<field name="arch" type="xml">
+				<form string="Gererar Archivo xls">
+					<group>
+						<field name="file_name" invisible="1"/>
+						<field name="excel_file" readonly="1" filename="file_name"/>
+					</group>
+					 <footer>
+						<button string="Cancelar" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+	 	</record>
+
+		<record id="view_sale_date_wizard" model="ir.ui.view">
+			<field name="name">sale.day.book.wizard.view</field>
+			<field name="model">sale.day.book.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Valoración del Inventario">
+					<group colspan="2" col="2">
+						<group string="Almacén">
+							<field name="warehouse" widget="many2many_tags" string="Almacén" options="{'no_create_edit': True,'no_open': True}"/>
+						</group>
+						<group string="Compañia">
+							<field name="company_id" string="Compañia" readonly="1"/>
+						</group>
+					</group>
+					<group colspan="2" col="2">
+						<!--<group string="Location">
+							<field name="location_id"/>
+						</group>-->
+					    <group string="Filtrar Por" attrs="{'invisible' : [('display_sum','=',True)]}">
+                            <field name="filter_by" widget="radio" string="Filtrar Por"/>
+                        </group>
+						<group string="Valoración">
+							<field name="start_date" string="Fecha Inicio"/>
+							<field name="end_date" string="Fecha Fin"/>
+							<field name="display_sum" string="Resumen"/>
+						</group>
+					</group>
+					<group string="Producto" attrs="{'invisible' : ['|',('filter_by','!=','product'),('display_sum','=',True)]}"/>
+                            <field name="product_ids" attrs="{'invisible' : ['|',('filter_by','!=','product'),('display_sum','=',True)]}">
+                                    <tree>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                        <group string="Categoria" attrs="{'invisible' : ['|',('filter_by','!=','categ'),('display_sum','=',True)]}"/>
+                            <field name="category" attrs="{'invisible' : ['|',('filter_by','!=','categ'),('display_sum','=',True)]}">
+                                    <tree>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+					<footer>
+						<button string="Imprimir PFD" name="print_report" type="object" class="oe_highlight"/>
+						
+						<button string="Imprimir EXCEL" name="print_exl_report" type="object" class="oe_highlight"/>
+						
+						<button string="Cancelar" class="oe_link" special="cancel" />
+					</footer>
+			   </form>
+			</field>
+		</record>
+
+		<menuitem id="menu_sales_day_book" name="Day Book Report" parent="account.menu_finance_reports"/>
+		<record id="action_sale_daybook_report_product_category" model="ir.actions.act_window">
+			<field name="name">Valoración de Inventario</field>
+			<field name="res_model">sale.day.book.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		<menuitem
+			id="menu_sale_book_report_product_category"
+			name="Reporte de Valoración de Inventario"
+			parent="stock.menu_warehouse_report"
+			action="action_sale_daybook_report_product_category"
+			groups="stock.group_stock_manager,stock.group_stock_user"
+		   />
+
+	 
+	</data>
+</openerp>

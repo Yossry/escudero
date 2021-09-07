@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="paperformat_lowmargin" model="report.paperformat">
+			<field name="name">European A4 low margin</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="page_height">0</field>
+			<field name="page_width">0</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">50</field>
+			<field name="margin_bottom">15</field>
+			<field name="margin_left">8</field>
+			<field name="margin_right">8</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">45</field>
+			<field name="dpi">90</field>
+		</record>
+
+		<report 
+			id="inventory_product_category_template_pdf"
+			string="Inventory Detail Report"
+			model="sale.day.book.wizard" 
+			report_type="qweb-pdf"
+			file="bi_inventory_valuation_reports.sales_daybook_template" 
+			name="bi_inventory_valuation_reports.sales_daybook_template"
+			paperformat="bi_inventory_valuation_reports.paperformat_lowmargin" 
+		/>
+	</data>
+</openerp>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_card_wizard_form">
+        <field name="name">wizard.stock_card_wizard.form</field>
+        <field name="model">wizard.stock_card_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Imprimir Reporte Kardex">
+                <group col="4">
+                    <group colspan="2">
+                        <field name="date_start" />
+                        <field name="location_id" options="{'no_open':True,'no_create': True}"/>
+                        <field name="filter_by" />
+                        <field name="category" attrs="{'invisible': [('filter_by', '!=', 'category')]}" options="{'no_open':True,'no_create': True}"/>
+                        <field name="products" widget="many2many_tags" attrs="{'invisible': [('filter_by', '!=', 'product')]}" options="{'no_open':True,'no_create': True}"/>
+                    </group>
+                    <group colspan="2">
+                        <field name="date_end" />
+                        <!--<field name="details" />
+                        <field name="group_by_serial" />
+                        <field name="group_by_category" />
+                        <field name="show_cost" />-->
+                        <field name="is_zero" />
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_card" string="PDF" type="object" class="btn-primary"/>
+                    <button name="print_card" type="object" default_focus="1"
+                                string="Generar Excel" class="oe_highlight"
+                                context="{'xls_export':1}" icon="fa-download"/>
+                    <button special="cancel" string="Cancelar" class="btn-default"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="war_stock_card_wizard">
+      <field name="name">Reporte Kardex</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">wizard.stock_card_wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+    <report
+        id="stock_card_xlsx"
+        model="wizard.stock_card_wizard"
+        string="Reporte Kardex"
+        report_type="xlsx"
+        name="hyd_stock_card.stock_card_report_xls.xlsx"
+        file="hyd_stock_card.stock_card_report_xls.xlsx"
+        menu="False"
+        attachment_use="False"/>
+
+    <report
+        id="stock_card_details_xlsx"
+        model="wizard.stock_card_wizard"
+        string="Stock card details"
+        report_type="xlsx"
+        name="hyd_stock_card.stock_card_details_report_xls.xlsx"
+        file="hyd_stock_card.stock_card_details_report_xls.xlsx"
+        menu="False"
+        attachment_use="False"/>
+
+    <menuitem id="menu_stock_report_stock_card"
+        name="Reporte Kardex"
+        sequence="130"
+        parent="stock.menu_warehouse_report"
+        action="war_stock_card_wizard" />
+
+</odoo>

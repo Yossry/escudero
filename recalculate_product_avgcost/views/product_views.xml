@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--# -*- coding: utf-8 -*-################################################################################    SIE CENTER custom module for Odoo#    Copyright (C) 2021#    @author: @cyntiafelix############################################################################### -->
+<odoo>
+  <record id="recalculate_avgcost_action_product_template" model="ir.actions.server">
+    <field name="name">Recalcular Costo Promedio</field>
+    <field name="type">ir.actions.server</field>
+    <field name="model_id" ref="product.model_product_template"/>
+    <field name="binding_model_id" ref="product.model_product_template" />
+    <field name="state">code</field>
+    <field name="code">if records: action = records.action_recalculate_avgcost()</field>
+  </record>
+  
+  <record id="recalculate_avgcost_action_product_product" model="ir.actions.server">
+    <field name="name">Recalcular Costo Promedio</field>
+    <field name="type">ir.actions.server</field>
+    <field name="model_id" ref="product.model_product_product"/>
+    <field name="binding_model_id" ref="product.model_product_product" />
+    <field name="state">code</field>
+    <field name="code">if records: action = records.action_recalculate_avgcost()</field>
+  </record>
+
+  <record id="message_window_form" model="ir.ui.view">
+    <field name="name">message.window.form</field>
+    <field name="model">message.window</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <p class="text-align">
+            <field name="message"/>
+          </p>
+          <footer>
+            <button name="action_ok" string="Ok" type="object" default_focus="1" class="oe_highlight"/>
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

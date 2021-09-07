@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="external_layout_stock_card">
+            <!-- Multicompany -->
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="article o_report_layout_standard">
+                <t t-raw="0" />
+            </div>
+            <t t-call="dev_stock_card_report.external_footer" />
+        </template>
+
+        <template id="external_footer">
+            <div class="footer">
+                 <div class="text-right" style="border-top: 1px solid white;">
+                      <ul class="list-inline">
+                        <li>Page:</li>
+                        <li>
+                          <span class="page"/>
+                        </li>
+                        <li>/</li>
+                        <li>
+                          <span class="topage"/>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+        </template>    
+</odoo>

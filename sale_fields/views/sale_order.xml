@@ -1,0 +1,104 @@
+<odoo>
+  <data>
+    <record id="view_add_fields_sale" model="ir.ui.view">
+        <field name="name">view.add.fields.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='other_information']" position="after">
+              <page string="Datos Extra" name="extra_data">
+                <group>
+              <group string="Información de Contacto">
+                <field name="partner_name"/>
+                <label for="street_page_lead" string="Dirección"/>
+                <div class="o_address_format">
+                  <field name="street" id="street_page_lead" placeholder="Calle..." class="o_address_street"/>
+                  <field name="street2" placeholder="Calle 2..." class="o_address_street"/>
+                  <field name="city" placeholder="Ciudad" class="o_address_city"/>
+                  <field name="state_id" class="o_address_state" placeholder="Estado" options="{&quot;no_open&quot;: True}"/>
+                  <field name="zip" placeholder="CP" class="o_address_zip"/>
+                  <field name="country_id" placeholder="País" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                </div>
+                <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+              </group>
+              <group class="mt48">
+                <label for="contact_name_page_lead"/>
+                <div class="o_row">
+                  <field name="contact_name" id="contact_name_page_lead"/>
+                  <field name="title" placeholder="Title" domain="[]" options="{&quot;no_open&quot;: True}"/>
+                </div>
+                <field name="function"/>
+                <label for="mobile_page_lead" class="oe_inline"/>
+                <div class="o_row o_row_readonly">
+                  
+                  <field name="mobile" id="mobile_page_lead" widget="phone"/>
+                </div>
+              </group>
+            </group>
+
+                <group>
+                  <group name="entrega" string="Entrega">
+                    <field name="condiciones_entrega" string="Condiciones de Entrega"/>
+                    <field name="lugar_entrega"/>
+                    <field name="tiempo_entrega"/>
+                    <field name="temperaturas"/>
+                    
+
+                  </group>
+                  <group name="invoice" string="Facturación">
+                    <field name="desc_col"/>
+                    <field name="datos_fact"/>                   
+                    <field name="tipo_cambio"/>                   
+                                       
+                  </group>
+                </group>
+                <group>
+                  <group name="templates" string="Plantilla">
+                    <field name="template_id"/>
+                  </group>
+                </group>
+
+                <group name="note_group" col="6" class="mt-2 mt-md-0">
+                  <group colspan="4">
+                    <field name="obs" nolabel="1" placeholder="Observaciones"/>
+                  </group>
+                    <div class="oe_clear"/>
+                </group>
+              </page>
+              <page string="Licitaciones" id="licitacion">
+                <group>
+                  <group id="lic" string="Licitación">
+                    <field name="licitacion" string="No de Licitación"/>
+                    <field name="organismo"/>
+                    <field name="obra"/>
+                  </group>
+                </group>
+              </page>
+            </xpath>
+
+            <xpath expr="//group[@name='order_details']" position="replace">
+              <group name="order_details">
+                <field name="validity_date" attrs="{'invisible': [('state', 'in', ['sale', 'done'])]}"/>
+                <div class="o_td_label" groups="sales_team.group_sale_salesman" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}">
+                  <label for="date_order" string="Quotation Date"/>
+                </div>
+                <field name="date_order" nolabel="1" groups="sales_team.group_sale_salesman" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+                <div class="o_td_label" attrs="{'invisible': [('state', 'in', ['draft', 'sent'])]}">
+                  <label for="date_order" string="Order Date"/>
+                </div>
+                <field name="date_order" attrs="{'required': [('state', 'in', ['sale', 'done'])], 'invisible': [('state', 'in', ['draft', 'sent'])]}" nolabel="1"/>
+                <field name="show_update_pricelist" invisible="1"/>
+                <label for="pricelist_id" groups="product.group_product_pricelist"/>
+                <div groups="product.group_product_pricelist" class="o_row">
+                  <field name="pricelist_id" options="{'no_open':True,'no_create': True}"/>
+                  <button name="update_prices" type="object" string=" Update Prices" help="Recompute all prices based on this pricelist" class="btn-link mb-1 px-0" icon="fa-refresh" confirm="This will update all unit prices based on the currently set pricelist." attrs="{'invisible': ['|', ('show_update_pricelist', '=', False), ('state', 'in', ['sale', 'done','cancel'])]}"/>
+                </div>
+                <field name="currency_id" invisible="1"/>
+                <field name="payment_term_id" options="{'no_open':True,'no_create': True}" readonly="False"/>
+              </group>
+            </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>

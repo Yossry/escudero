@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="journal_code_exit_form_view" model="ir.ui.view">
+        <field name="name">account.journal.code.exit.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="code_exit" attrs="{'invisible': [('type', '!=', 'bank')]}"/>
+            </field>
+
+        </field>
+    </record>
+</odoo>

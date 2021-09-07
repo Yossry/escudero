@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<odoo>
+
+<report
+    id="sale_quotation_new"
+    model="sale.order"
+    string="Presupuesto EISA"
+    report_type="qweb-pdf"
+    name="sale_fields.report_saleorder_draft"/>
+
+
+    <template id="report_saleorder_document_draft">
+        
+        <t t-call="web.external_layout_standard">
+        <div >     
+           
+           <span  style="position: absolute;" class="text-center" field="doc.template_id.name"/>
+                 
+            <img src="https://i.postimg.cc/MZF216pL/portada.jpg" width="900" hight="550" alt="Logo"/>
+            
+        </div> 
+
+        <div class="float-left" style="width:45%">
+            <img t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" height="100" width="360" alt="Logo"/>
+        </div>
+        <div class="float-left text-center" style="margin-left: 80px; color:#bcbcbc; font-size:22px; width:40%; padding-top: 20px;">
+
+            <b>Cotización de <span t-field="doc.template_id.name"></span></b>
+        </div>
+        <br></br><br></br>
+        <div>
+            <span style="margin-left: 20px; color:#bcbcbc;" class="text-center">_________________________________________________________________________________________________</span>
+        </div>
+        <div class="page " style="margin-top: 30px;" >            
+            
+            
+            <table id="info" class="table table-sm " style="font-size:16px; border: 1px solid #ddd;">
+            <tbody>
+            <tr>
+                <td class="text-center" style="background-color:#F8F5F0; width:50%; padding-top: 12px;  padding-bottom: 12px;"><strong>DATOS DEL CLIENTE</strong></td>  
+                <td class="text-center" style=" background-color: #F8F5F0; width:50%; padding-top: 12px;  padding-bottom: 12px;"><strong>DATOS COTIZACIÓN</strong></td>                            
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding-top: 10px; padding-bottom: 10px;">
+                <div style="margin-left: 10px; ">
+                    <div>
+                        <span class="fa fa-building-o"/>
+                        <strong t-field="doc.partner_name"/>
+                    </div>
+                    <div style="margin-left: 10px;">
+                        <span t-field="doc.street"/>,<span t-field="doc.street2"/>,
+                        <span t-field="doc.city"/>,
+                        <t t-if="doc.state_id"> <span t-field="doc.state_id"/><span>, </span></t>
+                        <span t-field="doc.country_id"/><span>, CP </span>
+                        <span t-field="doc.zip"/><br></br>
+                    
+                        <strong>Atención: </strong> <span t-field="doc.title"/>.<span t-field="doc.contact_name"/>
+                        <span t-field="doc.mobile"/>
+
+                    </div>
+                </div>
+                </td>
+
+                <td style="border: 1px solid #ddd; padding-top: 10px; padding-bottom: 10px;">
+                <div style="margin-left: 10px;">
+                    <div>
+                        No. de Cotización: <span t-field="doc.name"/>
+                    </div>
+                    <div>
+                        Fecha: <span t-field="doc.date_order"/>
+                    </div>
+                    <div>
+                        Validez: <strong>Sujeto a cambio sin previo aviso.</strong>
+                    </div>
+                    <div>
+                        Asesor de Ventas: <span t-field="doc.user_id"/>
+                    </div>
+                    <div>
+                        Cel/WhatsApp: <span t-field="doc.user_id.mobile"/>
+                    </div>
+                </div>
+                </td>                           
+            </tr>
+
+            </tbody>
+        </table>
+
+        <h3 style="margin-top: 20px; color:#FFFFFF; background-color:#D89685; text-align: center;" class="text-center"><span t-field="doc.template_id.name"/></h3>
+
+            <table class="table table-sm o_main_table" style="font-size:16px; margin-top: 15px; width:100%;">
+                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                <thead style="display: table-row-group">
+                    <tr style=" background-color: #F8F5F0;">
+                        <th class="text-center">CANTIDAD</th>
+                        <th class="text-center">UNID.</th>
+                        <th class="text-center">DESCRIPCION</th>
+                        <th class="text-center">PRECIO</th>
+                        <th class="text-center">
+                            <span groups="account.group_show_line_subtotals_tax_excluded">IMPORTE</span>
+                            <span groups="account.group_show_line_subtotals_tax_included">Total Price</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+
+                    <t t-set="current_subtotal" t-value="0"/>
+
+                    <t t-foreach="doc.order_line" t-as="line">
+
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+
+                        <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                            <t t-if="not line.display_type">
+                                <td name="td_quantity" style="text-align: right;">
+                                    <span t-field="line.product_uom_qty"/>
+                                </td>
+                                <td name="td_quantity" style="text-align: right;">
+                                    <span t-field="line.product_uom"/>
+                                </td>
+                                <td name="td_name"><span t-field="line.name"/></td>
+                                
+                                <td name="td_priceunit"  style="text-align: right;">
+                                    <span t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' t-field="line.price_unit"/>
+                                </td>
+                                <td name="td_subtotal"  style="text-align: right;">
+                                    <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                    <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                </td>
+                            </t>
+                            <t t-if="line.display_type == 'line_section'">
+                                <td name="td_section_line" colspan="99">
+                                    <span t-field="line.name"/>
+                                </td>
+                                <t t-set="current_section" t-value="line"/>
+                                <t t-set="current_subtotal" t-value="0"/>
+                            </t>
+                            <t t-if="line.display_type == 'line_note'">
+                                <td name="td_note_line" colspan="99">
+                                    <span t-field="line.name"/>
+                                </td>
+                            </t>
+                        </tr>
+
+                        <t t-if="current_section and (line_last or doc.order_line[line_index+1].display_type == 'line_section')">
+                            <tr class="is-subtotal text-right">
+                                <td name="td_section_subtotal" colspan="99">
+                                    <strong class="mr16">Subtotal</strong>
+                                    <span
+                                        t-esc="current_subtotal"
+                                        t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'
+                                    />
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+
+            <div class="clearfix" name="so_total_summary">
+                <div id="total" class="row" name="total">
+                    <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                        <table class="table table-sm">
+                            <tr class="border-black o_subtotal" style="">
+                                <td name="td_amount_untaxed_label"><strong>Subtotal</strong></td>
+                                <td name="td_amount_untaxed" class="text-right">
+                                    <span t-field="doc.amount_untaxed"/>
+                                </td>
+                            </tr>
+                            <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
+                                <tr style="">
+                                    <t t-if="amount_by_group[5] == 1 and doc.amount_untaxed == amount_by_group[2]">
+                                        <td name="td_amount_by_group_label_3">
+                                            <span t-esc="amount_by_group[0]"/>
+                                        </td>
+                                        <td name="td_amount_by_group_3" class="text-right o_price_total">
+                                            <span t-esc="amount_by_group[1]"
+                                                t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                        </td>
+                                    </t>
+                                    <t t-else ="">
+                                        <td name="td_amount_by_group_label">
+                                            <span t-esc="amount_by_group[0]"/>
+                                        </td>
+                                        <td name="td_amount_by_group" class="text-right o_price_total">
+                                            <span t-esc="amount_by_group[1]"
+                                                t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                            <tr class="border-black o_total">
+                                <td name="td_amount_total_label"><strong>Total</strong></td>
+                                <td name="td_amount_total" class="text-right">
+                                    <span t-field="doc.amount_total"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 10px; color:#FFFFFF; background-color:#D89685;" class="text-center">Condiciones de Venta</h3>
+
+
+            <table class="table table-condensed table-bordered" style="font-size:14px; margin-top: 10px;">
+            <tbody>
+              <tr>
+                <td style="width:30%"><strong>Forma de Pago: </strong> </td>
+                <td><span class="m-0" t-field="doc.condiciones_entrega"/></td>
+              </tr>
+              <tr>
+                 <td><strong>Lugar de Entrega: </strong></td>
+                <td><span class="m-0" t-field="doc.lugar_entrega"/></td>
+              </tr>
+              <tr t-if="doc.tiempo_entrega != False">
+                <td><strong>Tiempo de entrega: </strong></td>
+                <td><span class="m-0" t-field="doc.tiempo_entrega"/></td>
+              </tr>
+              
+              <tr t-if="doc.temperaturas != False">
+                <td><strong>Temperaturas</strong></td>
+                <td><span class="m-0" t-field="doc.temperaturas"/></td>
+              </tr>
+              <t t-set="garantias" t-value="doc.template_id.garantias"/>
+              <tr t-if="garantias != False">
+                <td><strong>Garantias: </strong></td>
+                <td><span class="m-0" t-field="doc.template_id.garantias"/></td>
+              </tr>
+              <t t-set="notas" t-value="doc.template_id.notas"/>
+              <tr t-if="notas != False">
+                <td><strong>Notas: </strong></td>
+                <td><span class="m-0" t-field="doc.template_id.notas"/></td>
+              </tr>
+              <t t-set="recomenda" t-value="doc.template_id.recomendacion"/>
+              <tr t-if="recomenda != False">
+                <td><strong>Recomendaciones: </strong></td>
+                <td><span class="m-0" t-field="doc.template_id.recomendacion"/></td>
+              </tr>
+              <t t-set="fletes" t-value="doc.template_id.fletes"/>
+              <tr t-if="fletes != False">
+                <td><strong>Fletes y Estadias</strong></td>
+                <td><span class="m-0" t-field="doc.template_id.fletes"/></td>
+              </tr>
+              
+            </tbody>
+          </table>
+
+          <h4 style="margin-top: 10px; color:#FFFFFF; background-color:#D89685;" class="text-center">Datos bancarios</h4>
+          <h3 style="margin-top: 10px;" class="text-center"><span t-field="doc.company_id.name"/></h3>
+          <h3 style="margin-top: 10px;" class="text-center"><span t-field="doc.company_id.vat"/></h3>
+
+          <table class="table table-condensed" id="info" style="font-size:14px;">
+            
+                <thead style="display: table-row-group">
+                    <tr>
+                        <th class="text-center" style="width:25%"><strong>BANCOS</strong></th>  
+                        <th class="text-center" style="width:25%"><strong>CUENTAS</strong></th>
+                        <th class="text-center" style="width:25%"><strong>SUCURSAL</strong></th>
+                        <th class="text-center" style="width:25%"><strong>CLABE</strong></th>
+                    </tr>
+                </thead>
+            <tbody>               
+                <t t-foreach="doc.company_id.bank_ids" t-as="bank">
+                    <tr t-if="bank.show_crm != False">
+                        <td class="text-center">
+                            <span t-field="bank.bank_id.name"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-field="bank.acc_number"/>
+                        </td>
+                        <td class="text-center"><span t-field="bank.acc_holder_name"/></td>
+                        <td class="text-center"><span t-field="bank.l10n_mx_edi_clabe"/></td>
+                    </tr>
+                    
+                </t>
+            </tbody>
+        </table>
+
+        <h4 style="margin-top: 10px; color:#FFFFFF; background-color:#D89685;" class="text-center">Contactos</h4>
+
+          <table class="table table-condensed" id="info" style="font-size:14px;">
+            
+                <thead style="display: table-row-group">
+                    <tr>
+                        <th class="text-center" style="width:25%"><strong></strong></th>  
+                        <th class="text-center" style="width:25%"><strong>NOMBRE</strong></th>
+                        <th class="text-center" style="width:25%"><strong>TELEFONO</strong></th>
+                        <th class="text-center" style="width:25%"><strong>E-MAIL</strong></th>
+                    </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">
+                        <b><span>COORDINADOR DE VENTAS</span></b>
+                    </td>
+                    <td class="text-center">
+                        <span>Ing. Mario López Requena</span>
+                    </td>
+                    <td class="text-center">
+                        <span>+521 9933181079</span>
+                    </td>
+                    <td class="text-center">
+                        <span>mario.requena@escudero.com.mx</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <b><span>OFICINA CENTRAL</span></b>
+                    </td>
+                    <td class="text-center">
+                        <span>Lic. Alejandra Perez Olán</span>
+                    </td>
+                    <td class="text-center">
+                        <span>+52 9932094136</span>
+                    </td>
+                    <td class="text-center">
+                        <span>auxiliar.ventas@escudero.com.mx</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-condensed text-center" style="font-size:18px;">
+            <tbody class="text-center">
+              <th><span>Atentamente</span><br></br><br></br><br></br>
+              <span>______________________________</span><br></br>
+              <span t-field="doc.user_id.name"/><br></br>
+              <span t-field="doc.company_id.name"/></th>
+            </tbody>
+          </table>
+            
+
+            <div class="oe_structure"/>
+        </div>
+    </t>
+
+</template>
+
+
+<template id="report_saleorder_draft">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="sale_fields.report_saleorder_document_draft" t-lang="doc.partner_id.lang"/>         
+        </t>
+
+    </t>
+</template>
+
+
+</odoo>

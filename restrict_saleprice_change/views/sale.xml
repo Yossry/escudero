@@ -1,0 +1,14 @@
+<odoo>
+    <record model="ir.ui.view" id="uom_esrtrict_change_line">
+        <field name="name">uom_esrtrict_change_line</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+           
+            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_uom']" position="replace">
+                <!-- Readonly field -'readonly': [('product_uom_readonly', '=', True)]-->
+                <field name="product_uom" force_save="1" string="UoM" attrs="{'required': [('display_type', '=',False)],}" context="{'company_id': parent.company_id}" groups="uom.group_uom" options="{&quot;no_open&quot;: True}" optional="show" readonly="True"/>
+            </xpath>
+          </field>
+    </record>
+</odoo>

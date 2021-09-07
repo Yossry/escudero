@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="report_saleorder_document_draft" inherit_id="sale_fields.report_saleorder_document_draft">
+        <xpath expr="//span[@t-field='doc.condiciones_entrega']" position="replace">
+            <span class="m-0" t-field="doc.forma_pago"/>
+        </xpath>
+        <xpath expr="//tr[@t-if='doc.tiempo_entrega != False']" position="replace">
+            <tr t-if="doc.tiempo_entrega_selection != False">
+                <td><strong>Tiempo de entrega: </strong></td>
+                <td><span class="m-0" t-field="doc.tiempo_entrega_selection"/></td>
+            </tr>
+        </xpath>
+    </template>
+
+
+</odoo>

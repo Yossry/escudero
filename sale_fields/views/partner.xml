@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+      <record id="view_part_rel" model="ir.ui.view">
+        <field name="name">view.part.rel</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <field name="property_account_position_id" position="after">
+              <field name="is_parte_relacionada"/>
+
+            </field>
+        </field>
+    </record>
+    </data>
+</odoo>

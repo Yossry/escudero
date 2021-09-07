@@ -1,0 +1,34 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="sale_anticipo">
+      <field name="name">sale_anticipo</field>
+      <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>     
+      <field name="arch" type="xml">
+        <field name="analytic_account_id"  position="after">
+                <field name="is_anticipo"/>
+                <field name="factura_anticipo" />
+            </field>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="anticipo_invoice">
+      <field name="name">anticipo_invoice</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>     
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='invoice_origin']" position="after">
+          <field name="is_anticipo" state="out_invoice"/>
+          <field name="factura_anticipo"/>
+        </xpath>
+
+        <xpath expr="//button[@name='button_draft']" position="after">
+          <button name="saldo_pendiente" string="Saldo Anticipo" type="object" attrs="{'invisible': [('is_anticipo','=', False)]}"/>
+        </xpath>
+        
+      </field>
+    </record>
+
+  </data>
+</odoo>

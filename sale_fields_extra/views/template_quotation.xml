@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="report_saleorder_licitacion" inherit_id="sale_fields.report_saleorder_licitacion">
+        <xpath expr="//span[@t-field='doc.condiciones_entrega']" position="replace">
+            <span class="m-0" t-field="doc.forma_pago"/>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.tiempo_entrega']" position="replace">
+            <span class="m-0" t-field="doc.tiempo_entrega_selection"/>
+        </xpath>
+    </template>
+</odoo>

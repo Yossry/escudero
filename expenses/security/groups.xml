@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="group_report_expenses" model="res.groups">
+            <field name="name">Reporta gastos de otros empleados</field>
+        </record>
+     </data>
+</odoo>

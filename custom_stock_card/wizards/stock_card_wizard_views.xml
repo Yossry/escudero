@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="stock_card_wizard_form">
+        <field name="name">wizard.stock_card_wizard.form</field>
+        <field name="model">wizard.stock_card_wizard</field>
+        <field name="inherit_id" ref="hyd_stock_card.stock_card_wizard_form"/>
+        <field name="arch" type="xml">
+            <field name="location_id" position="replace">
+                <field name="all_locations"/>
+                <field name="location_id" options="{'no_open':True,'no_create': True}" attrs="{'required': [('all_locations', '=', False)], 'invisible': [('all_locations', '=', True)]}"/>
+            </field>                    
+        </field>
+    </record>
+
+</odoo>

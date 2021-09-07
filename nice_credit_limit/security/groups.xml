@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="group_account_credit_control_user" model="res.groups">
+            <field name="name">User: For managing partner credit.</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="comment">the user will have access to all records of everyone in the sales application, and approve orders with state of account_wait when necessary.</field>
+        </record>
+        <record id="group_sale_approve_payment" model="res.groups">
+            <field name="name">Aprobador de Pagos</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="comment">El usuario tendrá acceso a dar de alta pagos y conciliarlos con las facturas.</field>
+        </record>
+	    
+	<record id="group_sale_concile_payment" model="res.groups">
+            <field name="name">Concilia Movimientos</field>
+            <field name="comment">El usuario tendrá acceso a conciliar movimientos con facturas.</field>
+        </record>
+	 <!--Permiso de Validar Asientos Gastos--> 
+	 <record id="group_public_expenses" model="res.groups">
+            <field name="name">Publica registro de Gastos</field>
+            <field name="comment">El usuario tendrá acceso a publicar movimientos de gastos.</field>
+        </record>
+	<!--Permiso de Ajustes de Inventario-->
+	<record id="group_adjust_inventory" model="res.groups">
+            <field name="name">Ajustes de Inventario</field>
+            <field name="comment">El usuario tendrá acceso de crear y validar ajustes de Inventario.</field>
+        </record>
+
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_account_credit_control_user'))]"/>
+        </record>
+
+    </data>
+
+    <data noupdate="1">
+    	<record id="base.default_user" model="res.users">
+	        <field name="groups_id" eval="[(4,ref('group_account_credit_control_user'))]"/>
+	    </record>
+    </data>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_partner_credit_limit_sale_order_form">
+        <field name="name">pcl.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+           
+            <field name="state"  position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,waiting_for_payment,sale"/>
+            </field>
+            <field name="payment_term_id"  position="replace">
+                <field name="payment_term_id" options="{'no_open':True,'no_create': True}" force_save="1"/>
+            </field>
+
+             <button name='action_cancel' position="after">
+                <button name="action_payment_approve" string="Aprobar Pago" class="btn-primary" type="object" states="waiting_for_payment" groups="nice_credit_limit.group_sale_approve_payment"/>
+            </button>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="payment_term_inherit">
+        <field name="name">payment_term_inherit</field>
+        <field name="model">sale.order</field>
+        <field name="groups_id" eval="[(6,0,[ref('sales_team.group_sale_manager')])]"/>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+           
+            <xpath expr="//field[@name='payment_term_id']" position="attributes">
+
+              <attribute name="readonly">False</attribute>
+
+            </xpath>
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+
+              <field name="type_order"/>
+
+            </xpath>
+          </field>
+    </record>
+
+    
+</odoo>

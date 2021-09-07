@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_add_fields_sale" model="ir.ui.view">
+        <field name="name">view.add.fields.sale.extra</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_fields.view_add_fields_sale"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='condiciones_entrega']" position="replace">
+                <field name="forma_pago" string="Forma de pago" style="color: #000"/>
+            </xpath>
+
+            <xpath expr="//field[@name='tiempo_entrega']" position="replace">
+                <field name="tiempo_entrega_selection" string="Tiempo de entrega" style="color: #000"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+	        <field name="name">res.config.settings.view.form.inherit.credit.limit</field>
+	        <field name="model">res.config.settings</field>
+	        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+	        <field name="arch" type="xml">
+	            <xpath expr="//div[@id='sale_ebay']" position="after">
+	            	<h2>Customer Credit Limit</h2>
+	            	<div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                            	<label for="on_exceeded"/>
+                                <div class="text-muted">
+                                    When a credit limit is exceeded:
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="on_exceeded" class="o_light_label" widget="radio"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                        	<div class="o_setting_left_pane">
+                        		<field name="use_global_limit"/>
+                        	</div>
+                            <div class="o_setting_right_pane">
+                            	<label for="use_global_limit"/>
+                                <div class="text-muted">
+                                    Once checked, the credit limit amount below will be applied to all customers without any individual credit limit specified.
+                                </div>
+                                <div class="content-group" attrs="{'invisible': [('use_global_limit', '=', False)]}">
+                                	<div class="mt16">
+			                        	<field name="global_limit"/>
+			                        </div>
+			                    </div>
+		                    </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                            	<field name="include_uninvoiced"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="include_uninvoiced"/>
+                                <div class="text-muted">
+                                    Include amount from uninvoiced sale orders.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+	            </xpath>
+	        </field>
+	    </record>
+    </data>
+</odoo>

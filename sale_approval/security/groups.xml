@@ -1,0 +1,7 @@
+<odoo>
+        <record id="group_purchase_approver" model="res.groups">
+            <field name="name">Aprobador de Compras</field>
+            <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="comment">El usuario tendra acceso al botón de Confirmar en Compras.</field>
+        </record>
+</odoo>

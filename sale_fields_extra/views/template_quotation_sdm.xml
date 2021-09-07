@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="report_saleorder_document_draft_sdm" inherit_id="sale_fields.report_saleorder_document_draft_sdm">
+        <xpath expr="//table[@class='table table-condensed table-bordered']" position="replace">
+            <table class="table table-condensed table-bordered" style="font-size:14px; margin-top: 10px;">
+                <tbody>
+                    <tr>
+                        <td style="width:30%"><strong>Forma de Pago: </strong> </td>
+                        <td><span class="m-0" t-field="doc.forma_pago"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lugar de Entrega: </strong></td>
+                        <td><span class="m-0" t-field="doc.lugar_entrega"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tiempo de entrega: </strong></td>
+                        <td><span class="m-0" t-field="doc.tiempo_entrega_selection"/></td>
+                    </tr>
+
+                    <t t-set="tipo" t-value="doc.tipo_cambio"/>
+                    <tr t-if="tipo != False">
+                        <td><strong>Tipo de Cambio: </strong></td>
+                        <td><span class="m-0" t-field="doc.tipo_cambio"/></td>
+                    </tr>
+                    <t t-set="notas" t-value="doc.template_id.notas"/>
+                    <tr t-if="notas != False">
+                        <td><strong>Notas: </strong></td>
+                        <td><span class="m-0" t-field="doc.template_id.notas"/></td>
+                    </tr>
+                    <t t-set="recomenda" t-value="doc.template_id.recomendacion"/>
+                    <tr t-if="recomenda != False">
+                        <td><strong>Recomendaciones: </strong></td>
+                        <td><span class="m-0" t-field="doc.template_id.recomendacion"/></td>
+                    </tr>               
+                
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+
+
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_approve_purchase" model="ir.ui.view">
+            <field name="name">view_approve_purchase</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <button name="button_approve" position="replace">
+                    <button name="button_approve" type="object" states="to approve" string="Aprobar Orden" class="oe_highlight" groups="purchase_approval.group_purchase_all_doc"/>                      
+                </button>
+            </field>
+        </record>
+    </data>
+</odoo>

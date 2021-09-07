@@ -1,0 +1,68 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+
+        <h2 class="oe_slogan" style="color: #875A7B;">Nice Credit Limit</h2>
+        <p>A nice solution for managing customer credit limit.</p>
+        <div class="section" id="features">
+            <h2>Features:</h2>
+            <ol class="arabic">
+                <li>
+                    <p class="first">Individual credit limit v.s. global credit limit for every partner(company type);</p>
+                </li>
+                <li>
+                    <p class="first">Support partner with childern partner(s): all ; Compute credit&amp;debit using account app.</p>
+                </li>
+                <li>
+                    <p class="first">Allow partner to override any credit;</p>
+                </li>
+                <li>
+                    <p class="first">Include/exclude uninvoiced amount(from sale orders);</p>
+                </li>
+                <li>
+                    <p class="first">New user role to approve/disapprove the sale order with state of account_review.</p>
+                </li>
+                <li>
+                    <p class="first">Configurable behavior when a partner's credit limit exceeds: </p>
+                    raising an exception directly or leaving to the concerned role.
+                </li>
+                <li>
+                    <p class="first">English&Simplified Chinese</p>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section" id="screenshots">
+            <h2>Screenshots</h2>
+            Global credit limit setting.
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="./images/global_settings.png"/>
+            </div>
+
+            Customer credit limit setting.
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="./images/customer_setting.png"/>
+            </div>
+
+            Raise exception when credit limit exceeded.
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="./images/sale_order_exception.png"/>
+            </div>
+
+            Account review when credit limit exceeded.
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="./images/account_review.png" style="height:340px;"/>
+            </div>
+        </div>
+
+        <div class="section" id="validate-steps">
+            <h2>The logic behind:</h2>
+            <ol class="arabic simple">
+                <li>See if we 'Use Global Limit'. If yes, choose the global credit limit as partner's credit limit.</li>
+                <li>See if the partner has an individual credit limit. If yes, choose the individual credit limit  as partner's credit limit.</li>
+                <li>See if we 'Include Uninvoiced Amount', if yes, we add all unvoiced amount to this partner's credit limit.</li>
+                <li>See if we simply raise an exception or set the sale order's state to 'account_review'</li>
+            </ol>
+        </div>
+
+    </div>
+</section>

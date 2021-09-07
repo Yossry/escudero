@@ -1,0 +1,36 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="validate_cfdi_po_inherit">
+      <field name="name">validate_cfdi_po_inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>     
+      <field name="arch" type="xml">
+        <field name="origin"  position="after">
+            <field name="xml_edi" filename="file_name"/>
+            <field name="file_name" invisible="1"/>
+        </field>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="validate_cfdi_invoice_inherit">
+      <field name="name">validate_cfdi_invoice_inherit</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>     
+      <field name="arch" type="xml">
+
+        <button name='button_cancel' position="after">
+            <button name="action_validar_facturas" class="oe_highlight" groups="account.group_account_invoice" string="Validar XML" type="object" attrs="{'invisible' : [('xml_valido', '=', True), ('state', 'not in', 'in_invoice'),('move_type', 'not in', 'in_invoice')]}"/>
+        </button>
+
+        <xpath expr="//sheet/group//group[last()]" position="inside">
+          <field name="xml_valido" invisible="0" string="Saldo Anterior" groups="nice_credit_limit.group_saldos_anteriores"/>
+          <field name="xml_edi" filename="file_name" attrs="{'invisible': [('move_type', 'not in', 'in_invoice')]}" readonly="True"/> 
+          <field name="file_name" invisible="1"/>    
+          <field name="l10n_mx_validate_uuid" attrs="{'invisible': [('move_type', 'not in', 'in_invoice')]}"/> 
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

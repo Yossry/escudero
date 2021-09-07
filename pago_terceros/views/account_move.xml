@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record model="ir.ui.view" id="pago_tercero_form">
+        <field name="name">pago_terceros.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@id='other_tab_group']" position="inside">
+                <group string="Pago por Terceros" name="pago_terceros_group" groups="base.group_no_one, account.group_account_user" attrs="{'invisible': [('move_type', 'not in', 'in_invoice')]}">
+                  <field name="proveedor_pago_tercero"/>
+                  <field name="apply_pago_tercero" invisible="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>

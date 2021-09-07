@@ -1,0 +1,173 @@
+<odoo>
+
+	<report
+	    id="stock_card_details_report"
+	    model="wizard.stock_card_wizard"
+	    string="Stock card detailed"
+	    report_type="qweb-pdf"
+	    name="hyd_stock_card.stock_card_details_template"
+	    paperformat="hyd_stock_card.paperformat_landa4"
+	    file="hyd_stock_card.stock_card_details_template"/>
+
+	<template id="stock_card_details_template">
+	    <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                	<style>
+                		table {
+						  border-collapse: collapse;
+						}
+						th,td {
+						  border: 1px solid #cecfd5;
+						  padding: 10px 15px;
+						}
+
+						.si_fi {
+							background-color: #95A5A6;
+						}
+
+						.alnright { text-align: right; }
+						.alncenter { text-align: center; }
+
+						thead { display: table-header-group }
+						tfoot { display: table-row-group }
+						tr { page-break-inside: avoid }
+
+                	</style>
+
+                	<h1 style="text-align: center;"> REPORTE KARDEX DE INVENTARIO </h1>
+
+                    <table width="100%" style="border-top:10;">
+                    	<tbody>
+                    		<tr>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><b>Almacén</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><span t-esc="data['warehouse']"/></td>
+                    		</tr>
+                    		<!--<tr>
+                    			<t t-if="data['filter_title_label']">
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Ubicación</b></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['location']"/></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><b><span t-esc="data['filter_title_label']"/></b></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['filter_title_value']"/></td>
+                    			</t>
+                    			<t t-else="">
+	                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><b>Ubicación</b></td>
+	                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><span t-esc="data['location']"/></td>
+	                    		</t>
+	                    	</tr>-->
+                    		<tr>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Desde</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['date_from']"/></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Hasta</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['date_to']"/></td>
+                    		</tr>
+                    	</tbody>
+                    </table>
+
+                    <br/><br/>
+
+                    <table width="100%">
+                    	<thead>
+                    		<tr>
+	                    		<!--<td><b>Referencia</b></td>
+	                    		<td><b>Producto</b></td>
+	                    		<td><b>UdM</b></td>-->
+	                    		<td t-if="data['group_by_serial']" ><b>Lote</b></td>	                    		
+	                    		<td style="width:15%;"><b>Fecha</b></td>
+	                    		<td><b>Concepto</b></td>
+	                    		<td><b>Inicial</b></td>
+	                    		<td><b>Entradas</b></td>
+	                    		<td><b>Salidas</b></td>
+	                    		<td><b>Costo</b></td>
+	                    		<td style="width:15%;"><b>Valor</b></td>
+	                    		<td><b>Balance</b></td>
+	                    		<td><b>Final</b></td>
+	                    	</tr>
+                    	</thead>
+                    	<tbody>
+	                    	<t t-foreach="data['lines']" t-as="categ">
+	                    		
+		                    	<t t-if="data['group_by_category']">
+		                    		<tr>
+			                    		<td class="category" colspan="12">Categoría: <span t-esc="categ['name']" /></td>
+			                    	</tr>
+			                    </t>
+			                    <t t-foreach="categ['lines']" t-as="line">
+			                    	<t t-foreach="line['lines']" t-as="line_sn">
+			                    		 <tr>
+                                    		<td class="category" colspan="12"> 
+                                    			[<span t-esc="line['ref']"/>]
+                                    			<strong><span t-esc="line['name']"/></strong>
+                                    			<span t-esc="line['uom']"/>
+                                    		</td>
+                                    	</tr>
+			                    		<tr>
+			                    			<!--<td t-att-rowspan="line['number_line']" t-if="line_sn_first"><span t-esc="line['ref']"/></td>
+			                    			<td t-att-rowspan="line['number_line']" t-if="line_sn_first"><span t-esc="line['name']"/></td>
+			                    			<td t-att-rowspan="line['number_line']" t-if="line_sn_first"><span t-esc="line['uom']"/></td>
+			                    			<!-<td t-if="data['show_cost']"><span t-esc="line_sn['cost_si']"/></td>-->
+			                    			<td t-att-rowspan="len(line_sn['lines']) + 2" t-if="data['group_by_serial']"><span t-esc="line_sn['name']"/></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class="alnright si_fi" >
+			                    				<t t-set="si" t-value="line_sn['si']"/>
+			                    				<b><span t-esc="'%.2f'%(si)"/></b>
+			                    			</td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<!--<td class='alnright' t-if="data['show_cost']"><b><span t-esc="line_sn['value_si']"/></b></td>-->
+			                    		</tr>
+			                    		<t t-foreach="line_sn['lines']" t-as="sline">
+				                    		<tr>
+				                    			<td class='alncenter' ><span t-esc="sline['date']"/></td>
+					                    		<td class='alncenter' colspan="2"><span t-esc="sline['mv']"/></td>
+					                    		<!--<td class='alncenter' ><span style="color:white;">-</span></td>-->
+					                    		<td class='alnright' ><span t-esc="sline['in']"/></td>
+					                    		<td class='alnright' ><span t-esc="sline['out']"/></td>
+					                    		<td class='alnright' >
+					                    			<t t-set="cost" t-value="sline['cost']"/>
+					                    			$<span t-esc="'%.2f'%(cost)"/>
+					                    		</td>
+					                    		<td class='alnright' >
+					                    			<t t-set="value" t-value="sline['value']"/>
+					                    			$<span t-esc="'%.2f'%(value)"/>
+					                    		</td>
+					                    		<td class='alnright' ><b><span t-esc="sline['bal']"/></b></td>
+					                    		<td class='alnright' >
+					                    			<t t-set="fi" t-value="sline['fi']"/>
+					                    			<span t-esc="'%.2f'%(fi)"/>
+					                    		</td>
+					                    		
+					                    	</tr>
+					                    </t>
+					                    <tr>
+					                    	<!--<td t-if="data['show_cost']" class='alnright' ><span t-esc="line_sn['cost_fi']"/></td>-->
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' colspan="2"><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class='alncenter' ><span style="color:white;">-</span></td>
+			                    			<td class="alnright si_fi" ><b><span t-esc="line_sn['fi']"/></b></td>
+			                    			<!--<td class="alnright " t-if="data['show_cost']"><b><span t-esc="line_sn['value_fi']"/></b></td>-->
+			                    		</tr>
+					                </t>
+		                    	</t>
+	                    	</t>
+	                    </tbody>
+                    </table>
+                </div>
+            </t>
+	    </t>
+	</template>
+
+</odoo>
+
+<!--file-->

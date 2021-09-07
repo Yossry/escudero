@@ -1,0 +1,174 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* nice_credit_limit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-22 02:19+0000\n"
+"PO-Revision-Date: 2019-01-22 02:19+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: nice_credit_limit
+#: selection:sale.order,state:0
+msgid "Account Review"
+msgstr "财务审核"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_partner__apply_individual_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_users__apply_individual_credit_limit
+msgid "Apply Individual Credit Limit"
+msgstr "单独设置客户信用度"
+
+#. module: nice_credit_limit
+#: model_terms:ir.ui.view,arch_db:nice_credit_limit.view_partner_credit_limit_sale_order_form
+msgid "Approve"
+msgstr "批准"
+
+#. module: nice_credit_limit
+#: selection:sale.order,state:0
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: nice_credit_limit
+#: model:ir.model,name:nice_credit_limit.model_res_config_settings
+msgid "Config Settings"
+msgstr "配置设定"
+
+#. module: nice_credit_limit
+#: model:ir.model,name:nice_credit_limit.model_res_partner
+msgid "Contact"
+msgstr "联系人"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_partner__credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_users__credit_limit
+#: model_terms:ir.ui.view,arch_db:nice_credit_limit.view_partner_credit_inherit_form
+msgid "Credit Limit"
+msgstr "信用额度"
+
+#. module: nice_credit_limit
+#: code:addons/nice_credit_limit/models/sale.py:57
+#, python-format
+msgid "Credit Limit Exceeded"
+msgstr "超出信用额度"
+
+#. module: nice_credit_limit
+#: model_terms:ir.ui.view,arch_db:nice_credit_limit.res_config_settings_view_form
+msgid "Customer Credit Limit"
+msgstr "客户信用度"
+
+#. module: nice_credit_limit
+#: model_terms:ir.ui.view,arch_db:nice_credit_limit.view_partner_credit_limit_sale_order_form
+msgid "Disapprove"
+msgstr "打回"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_config_settings__global_limit
+msgid "Global Credit Limit"
+msgstr "全局信用额度"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_config_settings__include_uninvoiced
+msgid "Include Uninvoiced Amount"
+msgstr "包含未开票金额"
+
+#. module: nice_credit_limit
+#: model_terms:ir.ui.view,arch_db:nice_credit_limit.res_config_settings_view_form
+msgid "Include amount from uninvoiced sale orders."
+msgstr "包含销售订单中的未开票金额"
+
+#. module: nice_credit_limit
+#: selection:res.config.settings,on_exceeded:0
+msgid "Leave to the concerned user role."
+msgstr "由财务审核决定。"
+
+#. module: nice_credit_limit
+#: selection:sale.order,state:0
+msgid "Locked"
+msgstr "已锁定"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_config_settings__on_exceeded
+msgid "On Limit Exceeded"
+msgstr "当超出额度时"
+
+#. module: nice_credit_limit
+#: model_terms:ir.ui.view,arch_db:nice_credit_limit.res_config_settings_view_form
+msgid "Once checked, the credit limit amount below will be applied to all customers without any individual credit limit specified."
+msgstr "选中后，下面设置的信用额度将被应用于所有没有单独设置信用度的客户。"
+
+#. module: nice_credit_limit
+#: selection:sale.order,state:0
+msgid "Quotation"
+msgstr "报价单"
+
+#. module: nice_credit_limit
+#: selection:sale.order,state:0
+msgid "Quotation Sent"
+msgstr "报价单送出"
+
+#. module: nice_credit_limit
+#: selection:res.config.settings,on_exceeded:0
+msgid "Raise an exception."
+msgstr "触发异常。"
+
+#. module: nice_credit_limit
+#: model:ir.model,name:nice_credit_limit.model_sale_order
+msgid "Sale Order"
+msgstr "销售订单"
+
+#. module: nice_credit_limit
+#: selection:sale.order,state:0
+msgid "Sales Order"
+msgstr "销售订单"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_sale_order__state
+msgid "Status"
+msgstr "状态"
+
+#. module: nice_credit_limit
+#: code:addons/nice_credit_limit/models/sale.py:56
+#, python-format
+msgid "The partner %s 's credit limit has been exceeded. Please review."
+msgstr "客户 %s 的信用额度已超出。请检查。"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_partner__uninvoiced_total_amount
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_users__uninvoiced_total_amount
+msgid "Total Uninvoiced Amount"
+msgstr "未开票总金额"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,help:nice_credit_limit.field_res_partner__uninvoiced_total_amount
+#: model:ir.model.fields,help:nice_credit_limit.field_res_users__uninvoiced_total_amount
+msgid "Total uninvoiced amount this customer owes you."
+msgstr "本客户所有未开票金额。"
+
+#. module: nice_credit_limit
+#: model:ir.model.fields,field_description:nice_credit_limit.field_res_config_settings__use_global_limit
+msgid "Use Global Limit"
+msgstr "使用全局额度"
+
+#. module: nice_credit_limit
+#: model:res.groups,name:nice_credit_limit.group_account_credit_control_user
+msgid "User: For managing partner credit."
+msgstr "用户：控制客户信用额度"
+
+#. module: nice_credit_limit
+#: model_terms:ir.ui.view,arch_db:nice_credit_limit.res_config_settings_view_form
+msgid "When a credit limit is exceeded:"
+msgstr "当超出信用额度"
+
+#. module: nice_credit_limit
+#: model:res.groups,comment:nice_credit_limit.group_account_credit_control_user
+msgid "the user will have access to all records of everyone in the sales application, and approve orders with state of account_wait when necessary."
+msgstr "本用户能访问销售应用中所有人的记录，并且可以审核状态为‘财务待审核’的单据。"
+

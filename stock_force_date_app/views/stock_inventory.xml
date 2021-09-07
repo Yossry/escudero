@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+	<!-- inventory adjustment -->
+	<record id="stock_force_view_inventory_form" model="ir.ui.view">
+		<field name="name">stock.inventory.view.form</field>
+		<field name="model">stock.inventory</field>
+		<field name="inherit_id" ref="stock.view_inventory_form"/>
+		<field name="arch" type="xml">
+		<xpath expr="//field[@name='accounting_date']" position="after">	
+			<field name="force_date" attrs="{'readonly': [('state', '=', 'done')]}" groups="stock_force_date_app.group_stock_force_date"/>
+		</xpath>
+
+	</field>
+	</record>
+
+	<!-- picking -->
+	<record id="stock_force_view_picking_form" model="ir.ui.view">
+		<field name="name">stock.inventory.view.form</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_form"/>
+		<field name="arch" type="xml">
+		<xpath expr="//field[@name='origin']" position="before">	
+			<field name="force_date" attrs="{'readonly': [('state', '=','done')]}" groups="stock_force_date_app.group_stock_force_date"/>
+		</xpath>
+	</field>
+	</record>
+
+</data>
+</odoo>

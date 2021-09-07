@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+	<report id="journal_entry_report_id"
+				string="Asiento Contable"
+				model="account.move"
+				report_type="qweb-pdf"
+				file="bi_print_journal_entries.journal_entry_report_template_id"
+				name="bi_print_journal_entries.journal_entry_report_template_id"/>							
+	</data>
+</odoo>

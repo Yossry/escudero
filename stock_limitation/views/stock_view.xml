@@ -1,0 +1,26 @@
+<odoo>
+
+    <record id="view_location_form_stock_limit" model="ir.ui.view">
+        <field name="name">stock.location.form</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="user_ids"
+                       widget="many2many_tags"
+                       options='{"no_create": True, "no_quick_create": True}'
+                       attrs="{'invisible': [('usage', '!=', 'internal')]}"
+                />
+                <label for="own_user_ids" class="oe_edit_only"/>
+                <field name="own_user_ids"
+                       widget="many2many_tags"
+                       class="oe_edit_only"
+                       nolabel="1"
+                       options='{"no_create": True, "no_quick_create": True}'
+                       attrs="{'invisible': [('usage', '!=', 'internal')]}"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

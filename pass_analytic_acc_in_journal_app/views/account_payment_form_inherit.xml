@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data> 
+
+        <!-- Pass Analytic Account in Manual Payment -->
+       <record id="inherit_view_account_payment_form" model="ir.ui.view">
+            <field name="name">account.payment.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[2]/field[@name='payment_transaction_id']" position="after">
+                    <field name="add_analytic_acc_tag" groups="pass_analytic_acc_in_journal_app.group_analtic_account_tag"/>
+                    <field name="analytic_account_id" attrs="{'invisible': [('add_analytic_acc_tag', '!=', True)], 'required': [('add_analytic_acc_tag', '=', True)]}"/>
+                    <!--<field name="analytic_tag_ids" widget="many2many_tags" attrs="{'invisible': [('add_analytic_acc_tag', '!=', True)], 'required': [('add_analytic_acc_tag', '=', True)]}"/>-->
+                </xpath>
+            </field>
+        </record>
+
+
+
+        <record id="inherit_my_view_account_payment_form" model="ir.ui.view">
+            <field name="name">account.mypayment.form</field>
+            <field name="model">account.payment.register</field>
+            <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]/field[@name='partner_bank_id']" position="after">
+                    <field name="add_analytic_acc_tag" groups="pass_analytic_acc_in_journal_app.group_analtic_account_tag"/>
+                    <field name="analytic_account_id" attrs="{'invisible': [('add_analytic_acc_tag', '!=', True)], 'required': [('add_analytic_acc_tag', '=', True)]}"/>
+                    <!--<field name="analytic_tag_ids" widget="many2many_tags" attrs="{'invisible': [('add_analytic_acc_tag', '!=', True)], 'required': [('add_analytic_acc_tag', '=', True)]}"/>-->
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

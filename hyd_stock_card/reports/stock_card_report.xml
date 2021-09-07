@@ -1,0 +1,211 @@
+<odoo>
+
+	<report
+	    id="stock_card_report"
+	    model="wizard.stock_card_wizard"
+	    string="Stock card"
+	    report_type="qweb-pdf"
+	    name="hyd_stock_card.stock_card_template"
+	    file="hyd_stock_card.stock_card_template" />
+
+
+	<report
+	    id="stock_card_report_landscape"
+	    model="wizard.stock_card_wizard"
+	    string="Stock card landscape"
+	    report_type="qweb-pdf"
+	    name="hyd_stock_card.stock_card_template_landscape"
+	    file="hyd_stock_card.stock_card_template_landscape"
+	    paperformat="hyd_stock_card.paperformat_landa4" />
+
+	<template id="stock_card_template">
+	    <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                	<style>
+                		table {
+						  border-collapse: collapse;
+						}
+						th,td {
+						  border: 1px solid #cecfd5;
+						  padding: 10px 15px;
+						}
+
+						.alnright { text-align: right; }
+
+						thead { display: table-header-group }
+						tfoot { display: table-row-group }
+						tr { page-break-inside: avoid }
+
+                	</style>
+
+                    <table width="80%" >
+                    	<tbody>
+                    		<tr>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><b>Warehouse</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><span t-esc="data['warehouse']"/></td>
+                    		</tr>
+                    		<tr>
+                    			<t t-if="data['filter_title_label']">
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Location</b></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['location']"/></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><b><span t-esc="data['filter_title_label']"/></b></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['filter_title_value']"/></td>
+                    			</t>
+                    			<t t-else="">
+	                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><b>Location</b></td>
+	                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><span t-esc="data['location']"/></td>
+	                    		</t>
+                    		</tr>
+                    		<tr>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Date from</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['date_from']"/></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Date to</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['date_to']"/></td>
+                    		</tr>
+                    	</tbody>
+                    </table>
+
+                    <br/><br/>
+
+                    <table width="100%">
+                    	<thead>
+                    		<tr>
+	                    		<td><b>Reference</b></td>
+	                    		<td><b>Designation</b></td>
+	                    		<td><b>UoM</b></td>
+	                    		<td><b>Initial stock</b></td>
+	                    		<td><b>In</b></td>
+	                    		<td><b>Out</b></td>
+	                    		<td><b>Balance</b></td>
+	                    		<td><b>Final Stock</b></td>
+	                    	</tr>
+                    	</thead>
+                    	<tbody>
+	                    	<t t-foreach="data['lines']" t-as="categ">
+		                    	<t t-if="data['group_by_category']">
+		                    		<tr>
+			                    		<td class="category" colspan="8">Category: <span t-esc="categ['name']" /></td>
+			                    	</tr>
+			                    </t>
+		                    	<t t-foreach="categ['lines']" t-as="line">
+			                    	<tr t-foreach="line['lines']" t-as="line_sn">
+			                    		<t t-set="length" t-value="len(line['lines'])" />
+			                    		<t t-if="line_sn_first"><td t-att-rowspan="length"><span t-esc="line['ref']"/></td></t>
+			                    		<t t-if="line_sn_first"><td t-att-rowspan="length"><span t-esc="line['name']"/></td></t>
+			                    		<t t-if="line_sn_first"><td t-att-rowspan="length"><span t-esc="line['uom']"/></td></t>
+			                    		<td class='alnright' ><span t-esc="line_sn['si']"/></td>
+			                    		<td class='alnright' ><span t-esc="line_sn['in']"/></td>
+			                    		<td class='alnright' ><span t-esc="line_sn['out']"/></td>
+			                    		<td class='alnright' ><b><span t-esc="line_sn['bal']"/></b></td>
+			                    		<td class='alnright' ><span t-esc="line_sn['fi']"/></td>
+			                    	</tr>
+		                    	</t>
+		                    </t>
+	                    </tbody>
+                    </table>
+                </div>
+            </t>
+	    </t>
+	</template>
+
+	<template id="stock_card_template_landscape">
+	    <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                	<style>
+                		table {
+						  border-collapse: collapse;
+						}
+						th,td {
+						  border: 1px solid #cecfd5;
+						  padding: 10px 15px;
+						}
+
+						.alnright { text-align: right; }
+
+						thead { display: table-header-group }
+						tfoot { display: table-row-group }
+						tr { page-break-inside: avoid }
+
+                	</style>
+
+                    <table width="80%" >
+                    	<tbody>
+                    		<tr>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><b>Warehouse</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><span t-esc="data['warehouse']"/></td>
+                    		</tr>
+                    		<tr>
+                    			<t t-if="data['filter_title_label']">
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Location</b></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['location']"/></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><b><span t-esc="data['filter_title_label']"/></b></td>
+                    				<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['filter_title_value']"/></td>
+                    			</t>
+                    			<t t-else="">
+	                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><b>Location</b></td>
+	                    			<td style="border-top: 0; border-right: 0; border-left: 0;" colspan="2"><span t-esc="data['location']"/></td>
+	                    		</t>
+                    		</tr>
+                    		<tr>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Date from</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['date_from']"/></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><b>Date to</b></td>
+                    			<td style="border-top: 0; border-right: 0; border-left: 0;"><span t-esc="data['date_to']"/></td>
+                    		</tr>
+                    	</tbody>
+                    </table>
+
+                    <br/><br/>
+
+                    <table width="100%">
+                    	<thead>
+                    		<tr>
+	                    		<td><b>Reference</b></td>
+	                    		<td><b>Designation</b></td>
+	                    		<td><b>UoM</b></td>
+	                    		<td t-if="data['show_cost']" ><b>Cost</b></td>
+	                    		<td t-if="data['group_by_serial']" ><b>S/N</b></td>
+	                    		<td><b>Initial stock</b></td>
+	                    		<td><b>In</b></td>
+	                    		<td><b>Out</b></td>
+	                    		<td><b>Balance</b></td>
+	                    		<td><b>Final Stock</b></td>
+	                    		<td t-if="data['show_cost']" ><b>Value</b></td>
+	                    	</tr>
+                    	</thead>
+                    	<tbody>
+	                    	<t t-foreach="data['lines']" t-as="categ">
+		                    	<t t-if="data['group_by_category']">
+		                    		<tr>
+			                    		<td class="category" colspan="8">Category: <span t-esc="categ['name']" /></td>
+			                    	</tr>
+			                    </t>
+		                    	<t t-foreach="categ['lines']" t-as="line">
+			                    	<tr t-foreach="line['lines']" t-as="line_sn">
+			                    		<t t-set="length" t-value="len(line['lines'])" />
+			                    		<t t-if="line_sn_first"><td t-att-rowspan="length"><span t-esc="line['ref']"/></td></t>
+			                    		<t t-if="line_sn_first"><td t-att-rowspan="length"><span t-esc="line['name']"/></td></t>
+			                    		<t t-if="line_sn_first"><td t-att-rowspan="length"><span t-esc="line['uom']"/></td></t>
+			                    		<t t-if="line_sn_first and data['show_cost']"><td class='alnright' t-att-rowspan="length"><span t-esc="line_sn['cost']"/></td></t>
+			                    		<td t-if="data['group_by_serial']" ><span t-esc="line_sn['name']"/></td>
+			                    		<td class='alnright' ><span t-esc="line_sn['si']"/></td>
+			                    		<td class='alnright' ><span t-esc="line_sn['in']"/></td>
+			                    		<td class='alnright' ><span t-esc="line_sn['out']"/></td>
+			                    		<td class='alnright' ><b><span t-esc="line_sn['bal']"/></b></td>
+			                    		<td class='alnright' ><span t-esc="line_sn['fi']"/></td>
+			                    		<td t-if="data['show_cost']" class='alnright' ><span t-esc="line_sn['value']"/></td>
+			                    	</tr>
+		                    	</t>
+		                    </t>
+	                    </tbody>
+                    </table>
+                </div>
+            </t>
+	    </t>
+	</template>
+
+</odoo>

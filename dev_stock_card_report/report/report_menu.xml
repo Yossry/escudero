@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<report id="print_stock_card_report"
+		            model="dev.stock.card"
+		            string="Stock Card"
+		            report_type="qweb-pdf"
+		            name="dev_stock_card_report.stock_card_report_template"  
+		            file="dev_stock_card_report.stock_card_report_template"
+		            />
+
+    <!--<report id="print_stock_valuation_report"
+                    model="stock.quant"
+                    string="Reporte de Valoración"
+                    report_type="qweb-pdf"
+                    name="dev_stock_card_report.stock_valuation_report_template"  
+                    file="dev_stock_card_report.stock_valuation_report_template"
+                    />-->
+		            
+    
+    
+    <record id="paperformat_stock_card" model="report.paperformat">
+        <field name="name">Stock Card A4</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">7</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">10</field>
+        <field name="dpi">90</field>
+    </record>
+    
+    <record id="dev_stock_card_report.print_stock_card_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="dev_stock_card_report.paperformat_stock_card" />
+    </record>
+    
+
+        
+    
+</odoo>

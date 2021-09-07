@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_validate_cfdi_validate_cfdi,validate_cfdi.validate_cfdi,model_validate_cfdi_validate_cfdi,base.group_user,1,1,1,1

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_users_form_extends" model="ir.ui.view">
+			<field name="name">res.users.form</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//page[@name='access_rights']" position="after">
+					<page string="Aprobaciones" name="approvals">
+						<group>
+							<group>
+								<field name="sale_order_can_approve" widget="radio"/>
+								<field name="sale_order_amount_limit" attrs="{'invisible': [('sale_order_can_approve', '=', 'no')],'required': [('sale_order_can_approve', '=', 'yes')]}"/>
+								<field name="sale_order_discount_limit" attrs="{'invisible': [('sale_order_can_approve', '=', 'no')],'required': [('sale_order_can_approve', '=', 'yes')]}"/>
+							</group>
+						</group>
+						<group>
+							<group>
+                            <field name="purchase_order_can_approve"/>
+                            <field name="amount_purchase_approval_min" attrs="{'invisible': [('purchase_order_can_approve', '=', False)],'required': [('purchase_order_can_approve', '=', True)]}"/>
+                            <field name="amount_purchase_approval_max" attrs="{'invisible': [('purchase_order_can_approve', '=', False)],'required': [('purchase_order_can_approve', '=', True)]}"/>
+                        </group> 
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>
+ 
